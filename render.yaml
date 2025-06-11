@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: csrf-token-api
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn render_ready_token_api:app
