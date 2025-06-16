@@ -13,9 +13,10 @@ def get_csrf_token():
     try:
         res = requests.get("https://playentry.org/")
         soup = BeautifulSoup(res.text, 'html.parser')
-        tag = soup.select_one('meta[name="csrf-token"]')
-        if tag:
-            return jsonify({"csrf_token": tag['content']})
+        csrf = soup.select_one('meta[name="csrf-token"]')
+        x = soup.select_one('meta[name="x-token"]')
+        if tag and csrf:
+            return jsonify({"csrf_token": csrf['content'], "x_token": x['content']})
         else:
             return jsonify({"error": "CSRF token not found"}), 404
     except Exception as e:
